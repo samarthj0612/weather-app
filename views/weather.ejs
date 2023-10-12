@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Samarth Jain" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+
+  <body>
+    <div id="sj-main">
+      <% if(data.weather[0].description.includes('sky')){ %>
+        <img src="https://images.unsplash.com/photo-1601297183305-6df142704ea2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" alt="Clear Sky" />
+      <% } else if(data.weather[0].description.includes('cloud')){ %>
+        <img src="https://images.unsplash.com/photo-1504253163759-c23fccaebb55?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Clouds" />
+      <% } else if(data.weather[0].description.includes('haze')){ %>
+        <img src="https://images.unsplash.com/photo-1533757704860-384affeed946?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Haze" />
+      <% } else if(data.weather[0].description.includes('fog')){ %>
+        <img src="https://images.unsplash.com/photo-1560996025-95b43d543770?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80" alt="Fog" />
+      <% } else if(data.weather[0].description.includes('snow')){ %>
+        <img src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Snow" />
+      <% } else if(data.weather[0].description.includes('sand')){ %>
+        <img src="https://images.unsplash.com/photo-1556290160-d006087340ac?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Blowing Sand" />
+      <% } else if(data.weather[0].description.includes('rain')){ %>
+        <img src="https://images.unsplash.com/photo-1519692933481-e162a57d6721?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Rain" />
+      <% } else if(data.weather[0].description.includes('mist')){ %>
+        <img src="https://images.unsplash.com/photo-1543968996-ee822b8176ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1856&q=80" alt="Mist" />
+      <% } else{ %>
+        <img src="https://images.unsplash.com/photo-1580193769210-b8d1c049a7d9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80" alt="Default" />
+      <% } %>
+
+      <div id="content">
+        <h1>Weather</h1><hr /> <br />
+
+        <form action="/getweather" method="post">
+          <input type="text" name="cityinp" id="cityinp" />
+          <select name="selectcity" id="selectcity">
+            <option value="Choose city">Choose city</option>
+          </select ><br /><br />
+          <input type="submit" value="Get weather" class="btn btn-primary px-5" />
+        </form> <br />
+
+        <h4><%= data.name %> (<%= data.sys.country %>)</h4> <hr />
+
+        <div id="weather">
+          <p>
+            <span>lon : <%= data.coord.lon %></span>
+            <span>lat : <%= data.coord.lat %></span>
+          </p>
+
+          <p>
+            <span>Weather desc</span>
+            <span><%= data.weather[0].description %></span>
+          </p>
+
+          <p><span>Temperature</span> <span><%= data.main.temp %></span></p>
+          <p><span>Visibility</span> <span><%= data.visibility %></span></p>
+          <p><span>wind speed</span> <span><%= data.wind.speed%></span></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js" integrity="sha512-GQ5/eIhs41UXpG6fGo4xQBpwSEj9RrBvMuKyE2h/2vw3a9x85T1Bt0JglOUVJJLeyIUl/S/kCdDXlE/n7zCjIg==" crossorigin="anonymous" referrerpolicy="no-referrer" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.2/axios.min.js" integrity="sha512-bHeT+z+n8rh9CKrSrbyfbINxu7gsBmSHlDCb3gUF1BjmjDzKhoKspyB71k0CIRBSjE5IVQiMMVBgCWjF60qsvA==" crossorigin="anonymous" referrerpolicy="no-referrer" ></script>
+    <script src="/javascripts/script.js"></script>
+  </body>
+</html>
